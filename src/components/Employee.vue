@@ -1,6 +1,21 @@
 <template>
   <div class="container">
     <v-container>
+        <v-col
+          cols="12"
+          sm="4"
+          md="6"
+      >
+          <v-text-field
+          filled
+          label="Search"
+          outlined
+          clearable
+          append-outer-icon="fas fa-search"
+          v-model="search"
+          >
+          </v-text-field>
+        </v-col>
       <v-switch
           v-model="model"
           :label="`Switch: ${model.toString()}`"
@@ -63,18 +78,47 @@ export default {
     return {
       updatingEmployee:{},
       employees: [],
+      search:"",
       model: true,
     }
   },
   computed:{
     filteredProducts() {
-      if (this.model) {
-        return this.employees.filter(employee => employee.deleted);
-      }
-      return this.employees;
+      let results = this.employees;
+
+      results = this.$_filterOnlyDeletedProduct(results);
+
+      // results = this.$_filterByName(results);
+
+      results = this.$_filterByEmail(results);
+
+      return results;
     }
   },
   methods: {
+    // $_filterByName(employees) {
+    //   if (this.search) {
+    //     employees = employees.filter(employee => employee.firstName.toLowerCase().includes(this.search.toLowerCase()));
+    //   }
+    //
+    //   return employees;
+    // },
+
+    $_filterByEmail(employees) {
+      if (this.search) {
+        employees = employees.filter(employee => employee.email.toLowerCase().includes(this.search.toLowerCase()));
+      }
+
+      return employees;
+    },
+    $_filterOnlyDeletedProduct(employees) {
+      if (this.model) {
+        employees = employees.filter(employee => employee.deleted);
+      }
+
+      return employees;
+    },
+
     async show() {
       await axios.get('http://localhost:8090/api/v1/employees')
           .then((response) => {
@@ -104,7 +148,6 @@ export default {
       this.show();
     },
   },
-  ///
   updatingEmployee(id) {
     this.$emit('update-employee', id);
   },
