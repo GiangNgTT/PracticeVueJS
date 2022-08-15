@@ -25,7 +25,7 @@
         </thead>
         <tbody>
         <tr
-            v-for="employee in employees"
+            v-for="employee in filteredProducts"
             :key="employee.name"
         >
           <td>{{ employee.firstName }}</td>
@@ -39,7 +39,6 @@
             >
               Update
             </v-btn>
-
             <v-btn
                 color="error"
                 plain
@@ -65,7 +64,14 @@ export default {
       updatingEmployee:{},
       employees: [],
       model: true,
-      isDeleted:true
+    }
+  },
+  computed:{
+    filteredProducts() {
+      if (this.model) {
+        return this.employees.filter(employee => employee.deleted);
+      }
+      return this.employees;
     }
   },
   methods: {
@@ -91,7 +97,7 @@ export default {
     },
 
     deleteEmployee(id){
-      axios.delete(`http://localhost:8090/api/v1/employees/` +id, this.employees)
+      axios.delete(`http://localhost:8090/api/v1/employees/` +id)
           .then(response => {
             console.log(response);
           });
