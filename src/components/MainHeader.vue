@@ -23,14 +23,6 @@
               </p>
             </router-link>
           </v-list-item>
-<!--          <v-list-item>-->
-<!--            <router-link class="link" to="/SearchByFirstName">-->
-<!--              <p class="item-menu">-->
-<!--                Search-->
-<!--&lt;!&ndash;                <a href v-on:click="buttonClicked">Search</a>&ndash;&gt;-->
-<!--              </p>-->
-<!--            </router-link>-->
-<!--          </v-list-item>-->
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 200px"></v-main>
