@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin("http://localhost:8080")
 @AllArgsConstructor
 public class EmployeeController {
     private final EmployeeRepository employeeRepository;
@@ -62,9 +63,8 @@ public class EmployeeController {
         if (employeeOptional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         employeeService.deleteEmployee(employeeId);
-
         return new ResponseEntity<>(employeeOptional, HttpStatus.OK);
+
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,14 +23,23 @@ public class Employee {
     @Indexed(unique = true)
     private String email;
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    private boolean deleted;
+
     public Employee (Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.deleted = false;
     }
-
-    boolean active = true;
 
     public Employee(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -64,4 +74,5 @@ public class Employee {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
